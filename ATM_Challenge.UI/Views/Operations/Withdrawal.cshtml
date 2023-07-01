@@ -1,0 +1,103 @@
+﻿@model ATM_Challenge.Models.Card.Detail
+
+<div class="text-center">
+    <h1 class="display-4">Withdrawal</h1>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Current balance: $ @Model.Card.Balance </span>
+        <input class="form-control" id="tbCode" placeholder="Enter  Withdrawal" name="Withdrawal" data-bs-toggle="tooltip" data-bs-placement="bottom" readonly required>
+        <button type="button" onclick="resetVal()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#virtualNumpad">Virtual Numpad</button>
+    </div>
+    <div>
+        <label id="valid" class="text-success"></label>
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="checkNumber()">Submit</button>
+    <form id="form" method="post" asp-area="" asp-controller="Operations" asp-action="Withdrawal" class="was-validated">
+        <input type="hidden" id="IdWithdrawal" name="IdWithdrawal" value="@null">
+        <input type="hidden" id="IdCard"       name="IdCard" value="@Model.Card.IdCard">
+        <input type="hidden" id="RegDate"      name="RegDate" value="@DateTime.Now">
+        <input type="hidden" id="Amount"       name="Amount" value="@null">
+    </form>
+    <br>
+    <div class="btn-group btn-group-lg">
+        <form asp-area="" asp-controller="Operations" asp-action="Index">
+            <input type="hidden" name="Id" value="@Model.Card.IdCard">
+            <button type="submit" class="btn btn-outline-warning">Back</button>
+        </form>
+        <p>&nbsp;</p>
+        <form asp-area="" asp-controller="Home" asp-action="Index">
+            <button type="submit" class="btn btn-outline-danger">Exit</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="virtualNumpad">
+    <div class="modal-dialog" style="max-width: fit-content !important;">
+        <div class="modal-content modal-content-centered">
+            <div class="modal-header">
+                <h3 class="modal-title">Virtual Numpad</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                    <div class="btn-group">
+                        <input class="text-center form-control-lg mb-2" id="code" placeholder="Enter amount" name="tbCode" readonly>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('1');">1</button>
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('2')">2</button>
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('3')">3</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('4')">4</button>
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('5')">5</button>
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('6')">6</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('7')">7</button>
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('8')">8</button>
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('9')">9</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-secondary py-3" onclick="numberClick('0')">0</button>
+                        <button type="button" class="btn btn-primary py-3" onclick="acceptNumPad()" data-bs-dismiss="modal">Accept</button>
+                        <button type="button" class="btn btn-danger py-3" onclick="document.getElementById('code').value='';">Clean Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function numberClick(n) {
+        if (document.getElementById("code").value + n <= @Model.Card.Balance) {
+            document.getElementById('code').value = document.getElementById('code').value + n;
+        }
+    }
+    function resetVal() {
+        document.getElementById("valid").className = "text-success";
+        document.getElementById("valid").innerHTML = "";
+    }
+    function acceptNumPad() {
+        document.getElementById("tbCode").readOnly = false;
+        document.getElementById("tbCode").value = document.getElementById("code").value;
+        document.getElementById("tbCode").reportValidity();
+        document.getElementById("tbCode").readOnly = true;
+    }
+    function checkNumber() {
+        document.getElementById("tbCode").readOnly = false;
+        if ((document.getElementById("tbCode").value != '') && document.getElementById("tbCode").value <= @Model.Card.Balance ) {
+            document.getElementById("Amount").value = document.getElementById("tbCode").value;
+            document.getElementById("form").submit();
+        }
+        document.getElementById("valid").className = "text-danger";
+        if (document.getElementById("tbCode").value > @Model.Card.Balance) { document.getElementById("valid").innerHTML = "Too much"; }
+        if (document.getElementById("tbCode").value.length == "") { document.getElementById("valid").innerHTML = "Enter a Amount"; }
+        document.getElementById("tbCode").reportValidity();
+        document.getElementById("tbCode").readOnly = true;
+    }
+</script>
+<noscript>Sorry, your browser does not support JavaScript!</noscript>

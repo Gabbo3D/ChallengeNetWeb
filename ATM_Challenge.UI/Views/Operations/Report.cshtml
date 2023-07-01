@@ -1,0 +1,40 @@
+﻿@model ATM_Challenge.Models.Card.Detail
+
+<div class="text-center">    
+    <h1 class="display-4">Report and details</h1>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Card number</span>
+        <input type="text" class="form-control" placeholder="Card number" value="@Model.Card.Number">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Date</span>
+        <input type="text" class="form-control" placeholder="Date" value="@Model.Card.DueDate.ToString().Split(' ').FirstOrDefault().ToString()">
+        <span class="input-group-text">Hour</span>
+        <input type="text" class="form-control" placeholder="Hour" value="@Model.Card.DueDate.ToString().Split(' ').ToList().ElementAt(1).ToString()">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Withdrawal amount</span>
+        <input type="text" class="form-control" placeholder="Amount" value="@Model.Card.Withdrawal">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Balance</span>
+        <input type="text" class="form-control" placeholder="Balance" value="@Model.Card.Balance">
+    </div>
+    <br>
+    <div class="btn-group btn-group-lg">
+        <form method="get" asp-controller="Operations" asp-action="Withdrawal">
+            <input type="hidden" name="Id" value="@Model.Card.IdCard">
+            <button type="submit" class="btn btn-outline-warning">Back</button>
+        </form>
+        <p>&nbsp;</p>
+        <form asp-area="" asp-controller="Home" asp-action="Index">
+            <button type="submit" class="btn btn-outline-danger">Exit</button>
+        </form>
+        <p>&nbsp;</p>        
+        @*<form>
+            <button type="button" class="btn btn-outline-secondary " onclick="window.print()">Print</button>
+        </form>*@
+    </div>
+</div>
+

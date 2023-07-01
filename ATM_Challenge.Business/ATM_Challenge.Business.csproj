@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ATM_Challenge.DataAccess\ATM_Challenge.DataAccess.csproj" />
+    <ProjectReference Include="..\ATM_Challenge.DTO\ATM_Challenge.DTO.csproj" />
+    <ProjectReference Include="..\ATM_Challenge.Models\ATM_Challenge.Models.csproj" />
+  </ItemGroup>
+
+</Project>

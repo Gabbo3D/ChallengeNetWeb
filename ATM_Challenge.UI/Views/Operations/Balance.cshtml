@@ -1,0 +1,28 @@
+﻿@model ATM_Challenge.Models.Card.Detail
+
+<div class="text-center">    
+    <h1 class="display-4">Balance</h1>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Card number</span>
+        <input type="text" class="form-control" placeholder="Card number" value="@Model.Card.Number.ToString()">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Due date</span>
+        <input type="text" class="form-control" placeholder="Due date" value="@Model.Card.DueDate.ToString().Split(' ').FirstOrDefault().ToString()">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Balance</span>
+        <input type="text" class="form-control" placeholder="Balance" value="$ @Model.Card.Balance">
+    </div>
+    <br>
+    <div class="btn-group btn-group-lg">
+        <form asp-area="" asp-controller="Operations" asp-action="Index">
+            <input type="hidden" name="Id" value="@Model.Card.IdCard">
+            <button type="submit" class="btn btn-outline-warning btn-lg">Back</button>
+        </form>
+        <p>&nbsp;</p>
+        <form asp-area="" asp-controller="Home" asp-action="Index">
+            <button type="submit" class="btn btn-outline-danger btn-lg">Exit</button>
+        </form>
+    </div>    
+</div>

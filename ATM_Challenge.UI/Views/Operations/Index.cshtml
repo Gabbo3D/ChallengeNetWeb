@@ -1,0 +1,23 @@
+﻿@*@{
+    ViewData["Title"] = "Operations Page";
+}*@
+@model ATM_Challenge.Models.Shared.RequestById
+<div class="text-center">    
+    <h1 class="display-4">Operations</h1>  
+
+    <div class="btn-group">
+        <form asp-area="" asp-controller="Operations" asp-action="Balance">
+            <input type="hidden" name="Id" value="@Model.Id">
+            <button type="submit" class="btn btn-primary py-3 btn-lg">Balance</button>
+        </form>
+        <p>&nbsp;</p>
+        <form method="get" asp-area="" asp-controller="Operations" asp-action="Withdrawal">
+            <input type="hidden" name="Id" value="@Model.Id">
+            <button type="submit" class="btn btn-primary py-3 btn-lg">Withdrawal</button>
+        </form>        
+    </div>    
+    <br> <br>
+    <form asp-area="" asp-controller="Home" asp-action="Index">
+        <button type="submit" class="btn btn-outline-danger py-3 btn-lg">Exit</button>
+    </form>
+</div>
